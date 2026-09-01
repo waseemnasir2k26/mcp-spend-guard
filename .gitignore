@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.eggs/
+
+# Tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Guard state — never commit a spend database or a live config
+*.db
+*.db-wal
+*.db-shm
+guard.yaml
+STOP
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

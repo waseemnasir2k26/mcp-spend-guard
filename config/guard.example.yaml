@@ -1,0 +1,77 @@
+# mcp-spend-guard — example configuration
+#
+# Run it with:  mcp-spend-guard run -c guard.yaml
+# Every cap is optional. Omit a cap, set it to null, or set it to 0 to disable it.
+
+# ---------------------------------------------------------------------------
+# The MCP server you are wrapping. This is exactly what used to sit in your
+# .mcp.json / claude_desktop_config.json entry.
+# ---------------------------------------------------------------------------
+server:
+  command: npx
+  args: ["-y", "@modelcontextprotocol/server-filesystem", "/Users/you/projects"]
+  # cwd: /path/to/working/dir        # optional, defaults to the guard's cwd
+  env:                               # merged on top of the guard's own environment
+    NODE_ENV: production
+
+# ---------------------------------------------------------------------------
+# Caps. The first one that trips wins, and the client gets a JSON-RPC error
+# naming it. Nothing is enforced that you have not set here.
+# ---------------------------------------------------------------------------
+limits:
+  # Hard ceiling on forwarded tools/call requests for this session.
+  max_calls_total: 200
+
+  # Sliding 60-second window across all tools. Blunt but effective against
+  # retry storms.
+  max_calls_per_minute: 30
+
+  # Per-tool ceilings. Tools not listed here are only bound by the caps above.
+  max_calls_per_tool:
+    web_search: 25
+    write_file: 10
+
+  # Estimated USD ceiling, using the cost table below. A call is refused
+  # *before* it runs if it would push the session over the line.
+  max_spend_usd: 5.00
+
+  # Seconds. Once the session has been alive this long, further tool calls are
+  # refused. The connection stays open so the client can shut down cleanly.
+  wall_clock_timeout_s: 3600
+
+# ---------------------------------------------------------------------------
+# Cost model. These are YOUR estimates — the guard has no way to see a real
+# invoice. Anything not listed costs `default_usd`.
+# ---------------------------------------------------------------------------
+costs:
+  default_usd: 0.0
+  tools:
+    web_search: 0.01
+    generate_image: 0.04
+    run_expensive_query: 0.25
+
+# ---------------------------------------------------------------------------
+# Safety valves.
+# ---------------------------------------------------------------------------
+safety:
+  # If this file exists, every tool call is refused immediately. Stop a runaway
+  # agent from another terminal with:  touch ./STOP
+  kill_switch_file: ./STOP
+
+  # N consecutive tool errors trip the breaker. Further calls are refused.
+  circuit_breaker_errors: 5
+
+  # When the breaker trips, shut the wrapped server down and exit non-zero (3)
+  # instead of idling. Set to false to keep the session alive but frozen.
+  exit_on_breaker_trip: true
+
+# ---------------------------------------------------------------------------
+# Where counters live. They are keyed by session_id and survive restarts, so a
+# crash-looping agent cannot reset its own budget by reconnecting.
+# ---------------------------------------------------------------------------
+storage:
+  db_path: ~/.mcp-spend-guard/guard.db
+  session_id: default
+
+# debug | info | warn | error | silent — always written to stderr, never stdout.
+log_level: info
