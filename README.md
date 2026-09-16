@@ -2,6 +2,10 @@
 
 A drop-in proxy that wraps any stdio MCP server and enforces a hard spend cap, per-tool rate limits, a circuit breaker and a kill switch — so a looping agent cannot quietly burn your budget.
 
+## Status
+
+Last reviewed: September 2026 · release v2026.09
+
 ```console
 $ mcp-spend-guard run -c guard.yaml
 [mcp-spend-guard] info: wrapping: npx -y @acme/search-mcp
