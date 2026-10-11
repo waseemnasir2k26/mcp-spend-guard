@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented in this file.
 
+## [2026.10] - 2026-10-12
+
+- Public MIT drop-in stdio proxy for any MCP server that enforces a hard spend cap, per-tool rate limits, a circuit breaker and a kill switch, returning a clean JSON-RPC error when a cap trips. Python 3.11+, PyYAML only, `run` and `report` subcommands, SQLite-backed store.
+- October 2026 review: README, tree and history re-read (no commits since the 2026-09-16 release commit); all 3 external README links returned HTTP 200. Source, tests and packaging metadata were not changed.
+- The old two-line "Built by SkynetLabs" footer was replaced with the Work with SkynetLabs section (Fiverr, Upwork, Calendly).
+- Known gaps, per the README's Limitations: spend is estimated from a hand-written per-tool table, stdio transport only, per-call not per-token, not a sandbox, budgets not pooled across servers. No CI workflow, not on PyPI, and the README's 39-test badge was not re-run this month.
+
 ## [2026.09] - 2026-09-16
 
 - Maintenance review of mcp-spend-guard — a drop-in stdio proxy that wraps any MCP server and enforces a hard spend cap, per-tool rate limits, a circuit breaker and a kill switch, returning a clean JSON-RPC error to the agent instead of hanging when a cap trips.

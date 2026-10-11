@@ -4,7 +4,7 @@ A drop-in proxy that wraps any stdio MCP server and enforces a hard spend cap, p
 
 ## Status
 
-Last reviewed: September 2026 · release v2026.09
+Last reviewed: October 2026 · release v2026.10
 
 ```console
 $ mcp-spend-guard run -c guard.yaml
@@ -184,8 +184,13 @@ The test suite spawns a real subprocess and speaks real JSON-RPC to `tests/fake_
 
 ---
 
-Built by SkynetLabs (Waseem Nasir) — we harden agent stacks for clients.
-[skynetjoe.com](https://skynetjoe.com) · [Book a free consultation](https://calendly.com/skynetlabs/schedule-a-free-consultation)
+## Work with SkynetLabs
+
+Built by [Waseem Nasir](https://www.skynetjoe.com/?utm_source=github&utm_medium=readme&utm_campaign=mcp-spend-guard) at SkynetLabs — n8n + AI automation for small businesses.
+
+- Hire on Fiverr: https://www.fiverr.com/agencies/skynetjoellc
+- Hire on Upwork: https://www.upwork.com/freelancers/muhammadwaseemnasir
+- Book a free call: https://calendly.com/skynetlabs/schedule-a-free-consultation
 
 ## License
 
